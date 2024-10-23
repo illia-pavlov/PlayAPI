@@ -1,4 +1,4 @@
-name: e2e tests
+name: api tests
 
 # on change to test files
 # on:
@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  e2e:
+  api:
     env:
       HOME: /root
     timeout-minutes: 60
@@ -29,11 +29,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: install deps
         run: npm ci
-      - name: running e2e tests
+      - name: running api tests
         run: npx playwright test
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: e2e-report
+          name: api-report
           path: playwright-report/
           retention-days: 7

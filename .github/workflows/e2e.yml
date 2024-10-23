@@ -1,0 +1,39 @@
+name: e2e tests
+
+# on change to test files
+# on:
+#   push:
+#     branches: [ main, master ]
+#   pull_request:
+#     branches: [ main, master ]
+
+# schedule run
+# on:
+#   schedule:
+#     - cron: "30 8 * * 1-5"   # <=== Change this value
+#   workflow_dispatch:
+
+# manual run
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    env:
+      HOME: /root
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.48.0
+    steps:
+      - uses: actions/checkout@v4
+      - name: install deps
+        run: npm ci
+      - name: running e2e tests
+        run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-report
+          path: playwright-report/
+          retention-days: 7

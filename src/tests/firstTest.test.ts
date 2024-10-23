@@ -1,8 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { UsersController } from "../controllers/usersController";
-import dotenv from "dotenv";
 
-dotenv.config();
 
 test("Get API response", async ({ request }) => {
   const usersController = new UsersController(request);

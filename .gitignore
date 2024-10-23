@@ -11,6 +11,7 @@ trace.zip
 dist/
 out/
 build/
+node_modules/
 
 # Ignore Playwright downloads (browsers)
 playwright/.cache/

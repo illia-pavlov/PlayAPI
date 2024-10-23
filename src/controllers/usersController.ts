@@ -1,38 +1,31 @@
 import { APIRequestContext } from "@playwright/test";
+import { ApiHelpers } from "../../utils/apiHelpers";
 
 export class UsersController {
   private request: APIRequestContext;
+  private static readonly usersUrl = "/api/users";
 
   constructor(request: APIRequestContext) {
     this.request = request;
-    console.log(`Base URL: ${process.env.API_BASE_URL}`);
   }
 
   async getUsers(page?: number) {
-    let url = "/api/users";
+    let url = UsersController.usersUrl;
 
     if (page) {
       url += `?page=${page}`;
     }
+    const response = await ApiHelpers.sendGetRequest(this.request, url);
+    return response;
+  }
 
-    try {
-      const response = await this.request.get(url);
+  async createUser(userData: { name: string; job: string }) {
+    const response = await ApiHelpers.sendPostRequest(
+      this.request,
+      UsersController.usersUrl,
+      userData
+    );
 
-      if (!response.ok()) {
-        throw new Error(
-          `Failed to fetch users: ${response.status()} - ${response.statusText()}`
-        );
-      }
-
-      return response;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(`Error fetching users: ${error.message}`);
-      } else {
-        console.error("Unknown error occurred");
-      }
-
-      throw error;
-    }
+    return response;
   }
 }

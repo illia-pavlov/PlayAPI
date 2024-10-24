@@ -25,7 +25,8 @@ export class UsersController {
     const response = await ApiHelpers.sendPostRequest(
       this.request,
       UsersController.usersUrl,
-      userData
+      userData,
+      { headers: { "Content-Type": "application/json" } }
     );
 
     return response;

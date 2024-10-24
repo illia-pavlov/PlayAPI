@@ -1,17 +1,35 @@
-import { APIRequestContext } from "@playwright/test";
+import { APIRequestContext, APIResponse } from "@playwright/test";
 
 export class ApiHelpers {
-  static async sendGetRequest(request: APIRequestContext, endpoint: string) {
-    const response = await request.get(endpoint);
-    return response;
+  static async sendGetRequest(request: APIRequestContext, url: string): Promise<APIResponse> {
+    try {
+      const response = await request.get(url);
+      this.handleResponse(response);
+      return response;
+    } catch (error) {
+      console.error(`GET request to ${url} failed:`, error);
+      throw error;
+    }
   }
 
   static async sendPostRequest(
     request: APIRequestContext,
-    endpoint: string,
-    body: object
-  ) {
-    const response = await request.post(endpoint, { data: body });
-    return response;
+    url: string,
+    data: object
+  ): Promise<APIResponse> {
+    try {
+      const response = await request.post(url, { data });
+      this.handleResponse(response);
+      return response;
+    } catch (error) {
+      console.error(`POST request to ${url} failed:`, error);
+      throw error;
+    }
+  }
+
+  private static handleResponse(response: APIResponse) {
+    if (!response.ok()) {
+      throw new Error(`Request failed with status ${response.status()}`);
+    }
   }
 }

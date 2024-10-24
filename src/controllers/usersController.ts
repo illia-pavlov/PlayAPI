@@ -10,8 +10,14 @@ export class UsersController {
   }
 
   async getUsers(page?: number) {
-    const url = `${UsersController.usersUrl}${page ? `?page=${page}` : ""}`;
-    const response = await ApiHelpers.sendGetRequest(this.request, url);
+    const response = await ApiHelpers.sendGetRequest(
+      this.request,
+      UsersController.usersUrl,
+      {
+        headers: { "Content-Type": "application/json" },
+        queryParams: page ? { page } : undefined,
+      }
+    );
     return response;
   }
 

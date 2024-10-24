@@ -11,7 +11,9 @@ export class UsersController {
 
   async getUsers(page?: number) {
     const url = `${UsersController.usersUrl}${page ? `?page=${page}` : ""}`;
-    const response = await ApiHelpers.sendGetRequest(this.request, url);
+    const response = await ApiHelpers.sendGetRequest(this.request, url, {
+      headers: { "Content-Type": "application/json" },
+    });
     return response;
   }
 
@@ -19,7 +21,8 @@ export class UsersController {
     const response = await ApiHelpers.sendPostRequest(
       this.request,
       UsersController.usersUrl,
-      userData
+      userData,
+      { headers: { "Content-Type": "application/json" } }
     );
 
     return response;

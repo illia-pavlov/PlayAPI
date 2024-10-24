@@ -10,11 +10,7 @@ export class UsersController {
   }
 
   async getUsers(page?: number) {
-    let url = UsersController.usersUrl;
-
-    if (page) {
-      url += `?page=${page}`;
-    }
+    const url = `${UsersController.usersUrl}${page ? `?page=${page}` : ""}`;
     const response = await ApiHelpers.sendGetRequest(this.request, url);
     return response;
   }

@@ -12,6 +12,6 @@ export class ApiHelpers {
     body: object
   ) {
     const response = await request.post(endpoint, { data: body });
-    return response.json();
+    return response;
   }
 }

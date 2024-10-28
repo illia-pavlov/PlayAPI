@@ -1,10 +1,10 @@
 import { test } from "@playwright/test";
-import { UsersController } from "../controllers/usersController";
+import { UsersController } from "../../controllers/usersController";
 import {
   verifyStatusCode,
   verifyProperties,
-} from "../../utils/responseHelpers";
-import { userData } from "../data/userData";
+} from "../../../utils/responseHelpers";
+import { userData } from "../../data/userData";
 
 test.describe("User API Tests", () => {
   test("should fetch users for a specific page", async ({ request }) => {

@@ -1,5 +1,5 @@
 import { APIRequestContext } from "@playwright/test";
-import { ApiHelpers } from "../../utils/apiHelpers";
+import { ApiHelpers } from "../../utils/api/apiHelpers";
 
 export class UsersController {
   private request: APIRequestContext;

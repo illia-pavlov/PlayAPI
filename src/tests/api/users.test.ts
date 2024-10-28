@@ -3,7 +3,7 @@ import { UsersController } from "../../controllers/usersController";
 import {
   verifyStatusCode,
   verifyProperties,
-} from "../../../utils/responseHelpers";
+} from "../../../utils/api/responseHelpers";
 import { userData } from "../../data/userData";
 
 test.describe("User API Tests", () => {

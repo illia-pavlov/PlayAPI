@@ -1,10 +1,11 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import { ShopHomePage } from "../../pages/ShopHomePage";
+import { shopHomePageData } from "../../data/testData";
+import { verifyPageTitle } from "../../../utils/ui/pageHelpers";
 
 test("Able to open home page", async ({ page }) => {
   const shopHomePage = new ShopHomePage(page);
 
   await shopHomePage.goto();
-  const title = await page.title();
-  expect(title).toContain("MERN Store");
+  await verifyPageTitle(page, shopHomePageData.expectedTitle);
 });

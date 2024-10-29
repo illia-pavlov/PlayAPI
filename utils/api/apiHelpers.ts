@@ -63,6 +63,14 @@ export class ApiHelpers {
     return this.sendRequest(request, { method: "POST", url, data, ...options });
   }
 
+  static async sendPutRequest(
+    request: APIRequestContext,
+    url: string,
+    options: { headers?: Record<string, string>; token?: string } = {}
+  ): Promise<APIResponse> {
+    return this.sendRequest(request, { method: "PUT", url, ...options });
+  }
+
   private static handleResponse(response: APIResponse): void {
     if (!response.ok()) {
       throw new Error(`Request failed with status ${response.status()}`);

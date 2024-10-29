@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import { AuthController } from "../../controllers/authController";
 import {
   verifyStatusCode,
@@ -10,6 +10,8 @@ import {
 } from "../../../utils/api/userDataUtils";
 import { User } from "../../types/types";
 
+let authToken: string;
+
 test.describe("User API Tests", () => {
   test("should register a new user", async ({ request }) => {
     const authController = new AuthController(request);
@@ -18,6 +20,7 @@ test.describe("User API Tests", () => {
     const response = await authController.register(newUser);
 
     const responseData = await response.json();
+    authToken = responseData.token;
     const userObject = createUserObject(responseData);
     const { password, ...newUserWithoutPassword } = newUser;
 

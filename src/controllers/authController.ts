@@ -3,7 +3,12 @@ import { ApiHelpers } from "../../utils/api/apiHelpers";
 
 export class AuthController {
   private request: APIRequestContext;
-  private static readonly authUrl = "/api/auth/register";
+  private static readonly baseUrl = "/api/auth";
+
+  private static readonly endpoints = {
+    register: `${AuthController.baseUrl}/register`,
+    login: `${AuthController.baseUrl}/login`,
+  };
 
   constructor(request: APIRequestContext) {
     this.request = request;
@@ -18,7 +23,7 @@ export class AuthController {
   }) {
     const response = await ApiHelpers.sendPostRequest(
       this.request,
-      AuthController.authUrl,
+      AuthController.endpoints.register,
       userRegisterData,
       {
         headers: { "Content-Type": "application/json" },

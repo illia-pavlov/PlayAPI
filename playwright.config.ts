@@ -23,17 +23,16 @@ export default defineConfig({
   projects: [
     {
       name: "API Tests",
-      testDir: "./src/tests/api", // Directory for API tests
+      testDir: "./src/tests/api",
       use: {
-        baseURL: process.env.API_BASE_URL || "https://reqres.in",
+        baseURL: process.env.API_BASE_URL,
       },
     },
     {
       name: "UI Tests",
-      testDir: "./src/tests/ui", // Directory for UI tests
+      testDir: "./src/tests/ui",
       use: {
-        baseURL:
-          process.env.UI_BASE_URL || "https://shopdemo-alex-hot.koyeb.app/", // Update to your UI's base URL
+        baseURL: process.env.UI_BASE_URL,
       },
     },
   ],

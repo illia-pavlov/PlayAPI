@@ -17,7 +17,7 @@ PlayAPI is a scalable API and UI testing framework built on Playwright and TypeS
 To get started with PlayAPI, clone the repository and install the necessary dependencies:
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/illia-pavlov/PlayAPI.git
 cd playapi
 npm install
 ```
@@ -28,7 +28,7 @@ npm install
   Run all tests (API and UI):
 
   ```bash
-  npm run test
+  npm test
   ```
 - **Run API Tests**:
   Execute only the API tests:
@@ -39,7 +39,7 @@ npm install
 
 - **Run UI Tests**:
   Execute only the UI tests:
-  
+
   ```bash
   npm run test:ui
   ```

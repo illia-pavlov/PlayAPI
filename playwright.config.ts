@@ -18,7 +18,22 @@ export default defineConfig({
   reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: process.env.API_BASE_URL || "https://reqres.in",
     trace: "on-first-retry",
   },
+  projects: [
+    {
+      name: "API Tests",
+      testDir: "./src/tests/api",
+      use: {
+        baseURL: process.env.API_BASE_URL,
+      },
+    },
+    {
+      name: "UI Tests",
+      testDir: "./src/tests/ui",
+      use: {
+        baseURL: process.env.UI_BASE_URL,
+      },
+    },
+  ],
 });

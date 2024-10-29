@@ -21,6 +21,8 @@ jobs:
   e2e:
     env:
       HOME: /root
+      API_BASE_URL: ${{ secrets.API_BASE_URL }}
+      UI_BASE_URL: ${{ secrets.UI_BASE_URL }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:

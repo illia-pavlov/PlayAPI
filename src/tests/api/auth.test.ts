@@ -4,7 +4,7 @@ import { generateRandomUser } from "../../../utils/api/userDataUtils";
 import { User } from "../../types/types";
 import {
   assertStatusCode,
-  assertPropertiesEqual,
+  assertProperties,
 } from "../../../utils/api/responseHelpers";
 
 test.describe("User API Tests", () => {
@@ -21,6 +21,6 @@ test.describe("User API Tests", () => {
     const { password, isSubscribed, ...generatedUser } = newUser;
 
     assertStatusCode(response, 200);
-    assertPropertiesEqual(userFromResponse, generatedUser);
+    assertProperties(userFromResponse, generatedUser);
   });
 });

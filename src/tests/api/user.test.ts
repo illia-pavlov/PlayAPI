@@ -1,18 +1,28 @@
 import { expect } from "@playwright/test";
-import { test } from "../fixtures";
+import { registerAndRetrieveAuthToken } from "../fixtures";
 import { UserController } from "../../controllers/userController";
-import { verifyStatusCode } from "../../../utils/api/responseHelpers";
+import {
+  assertStatusCode,
+  assertProperties,
+} from "../../../utils/api/responseHelpers";
 
-test.describe("User API Tests", () => {
-  test("should get user info using the stored token", async ({
-    request,
-    authToken,
-  }) => {
-    expect(authToken).toBeDefined();
-    const userController = new UserController(request);
+registerAndRetrieveAuthToken.describe("User API Tests", () => {
+  let userController: UserController;
 
-    const response = await userController.getUser(authToken);
-
-    verifyStatusCode(response, 200);
+  registerAndRetrieveAuthToken.beforeEach(async ({ request }) => {
+    userController = new UserController(request);
   });
+
+  registerAndRetrieveAuthToken(
+    "should retrieve user info successfully",
+    async ({ account }) => {
+      expect(account.token).toBeDefined();
+
+      const response = await userController.getUser(account.token);
+      const { user: userResponseBody } = await response.json();
+      
+      assertStatusCode(response, 200);
+      assertProperties(userResponseBody, account.userData);
+    }
+  );
 });

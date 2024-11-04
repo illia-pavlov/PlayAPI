@@ -1,16 +1,11 @@
 import { test } from "@playwright/test";
 import { AuthController } from "../../controllers/authController";
-import {
-  verifyStatusCode,
-  verifyProperties,
-} from "../../../utils/api/responseHelpers";
-import {
-  generateRandomUser,
-  createUserObject,
-} from "../../../utils/api/userDataUtils";
+import { generateRandomUser } from "../../../utils/api/userDataUtils";
 import { User } from "../../types/types";
-
-let authToken: string;
+import {
+  assertStatusCode,
+  assertPropertiesEqual,
+} from "../../../utils/api/responseHelpers";
 
 test.describe("User API Tests", () => {
   test("should register a new user", async ({ request }) => {
@@ -18,13 +13,14 @@ test.describe("User API Tests", () => {
     const newUser: User = generateRandomUser();
 
     const response = await authController.register(newUser);
-
     const responseData = await response.json();
-    authToken = responseData.token;
-    const userObject = createUserObject(responseData);
-    const { password, ...newUserWithoutPassword } = newUser;
 
-    verifyStatusCode(response, 200);
-    verifyProperties(userObject, newUserWithoutPassword);
+    const registeredUser = responseData.user;
+
+    const { id, role, ...userFromResponse } = registeredUser;
+    const { password, isSubscribed, ...generatedUser } = newUser;
+
+    assertStatusCode(response, 200);
+    assertPropertiesEqual(userFromResponse, generatedUser);
   });
 });

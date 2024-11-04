@@ -10,17 +10,12 @@ import {
 test.describe("User API Tests", () => {
   test("should register a new user", async ({ request }) => {
     const authController = new AuthController(request);
-    const newUser: User = generateRandomUser();
+    const generatedUser: User = generateRandomUser();
 
-    const response = await authController.register(newUser);
-    const responseData = await response.json();
-
-    const registeredUser = responseData.user;
-
-    const { id, role, ...userFromResponse } = registeredUser;
-    const { password, isSubscribed, ...generatedUser } = newUser;
+    const response = await authController.register(generatedUser);
+    const { user: registeredUser } = await response.json();
 
     assertStatusCode(response, 200);
-    assertProperties(userFromResponse, generatedUser);
+    assertProperties(registeredUser, generatedUser);
   });
 });

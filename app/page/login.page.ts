@@ -11,6 +11,8 @@ export class Login extends AppPage {
   private passwordInput = this.page.getByPlaceholder(
     "Please Enter Your Password"
   );
+  private emailErrorText = this.page.getByText("Email is required.");
+  private passwordErrorText = this.page.getByText("Password is required.");
 
   async expectLoaded() {
     await expect(this.signInButton).toBeVisible();
@@ -22,5 +24,10 @@ export class Login extends AppPage {
     await this.emailInput.fill(user.email);
     await this.passwordInput.fill(user.password);
     await this.signInButton.click();
+  }
+
+  async expectErrors() {
+    await expect(this.emailErrorText).toBeVisible();
+    await expect(this.passwordErrorText).toBeVisible();
   }
 }

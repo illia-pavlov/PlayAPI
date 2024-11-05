@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { ShopHomePage } from "../../pages/ShopHomePage";
-import { LoginPage } from "../../pages/LoginPage";
+import { ShopHomePage } from "../../pages/home.page";
+import { LoginPage } from "../../pages/login.page";
 
 test.describe("Login Page Tests", () => {
   test("Should not be able to login with blank email and password", async ({

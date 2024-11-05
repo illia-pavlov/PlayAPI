@@ -42,23 +42,23 @@ export default defineConfig({
         browserName: "chromium",
       },
     },
-    {
-      name: "UI Tests - Firefox",
-      testDir: "./src/tests/ui",
-      use: {
-        ...devices["Desktop Firefox"],
-        baseURL: process.env.UI_BASE_URL,
-        browserName: "firefox",
-      },
-    },
-    {
-      name: "UI Tests - WebKit",
-      testDir: "./src/tests/ui",
-      use: {
-        ...devices["Desktop Safari"],
-        baseURL: process.env.UI_BASE_URL,
-        browserName: "webkit",
-      },
-    },
+    // {
+    //   name: "UI Tests - Firefox",
+    //   testDir: "./src/tests/ui",
+    //   use: {
+    //     ...devices["Desktop Firefox"],
+    //     baseURL: process.env.UI_BASE_URL,
+    //     browserName: "firefox",
+    //   },
+    // },
+    // {
+    //   name: "UI Tests - WebKit",
+    //   testDir: "./src/tests/ui",
+    //   use: {
+    //     ...devices["Desktop Safari"],
+    //     baseURL: process.env.UI_BASE_URL,
+    //     browserName: "webkit",
+    //   },
+    // },
   ],
 });

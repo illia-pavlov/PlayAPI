@@ -28,7 +28,7 @@ export default defineConfig({
   projects: [
     {
       name: "API Tests",
-      testDir: "./src/tests/api",
+      testDir: "./tests/api",
       use: {
         baseURL: process.env.API_BASE_URL,
       },

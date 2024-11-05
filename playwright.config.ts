@@ -35,7 +35,7 @@ export default defineConfig({
     },
     {
       name: "UI Tests - Chromium",
-      testDir: "./src/tests/ui",
+      testDir: "./tests/ui",
       use: {
         ...devices["Desktop Chrome"],
         baseURL: process.env.UI_BASE_URL,

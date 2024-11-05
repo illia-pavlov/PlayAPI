@@ -1,5 +1,5 @@
 import { test } from "playwright/test";
-import { Application } from "../../../app";
+import { Application } from "../../app";
 
 test.describe("Login", () => {
   test("Able to login with valid credentials", async ({ page }) => {

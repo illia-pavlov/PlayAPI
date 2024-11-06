@@ -1,7 +1,5 @@
 import { test } from "@playwright/test";
 import { Application } from "../app";
-import { UserCreateRequest, UserCreatedResponse } from "../api/models";
-// import { randomUUID } from "node:crypto";
 
 export const baseFixture = test.extend<{ app: Application }>({
   app: async ({ page }, use) => {
@@ -17,7 +15,7 @@ export type DefaultUserOption = {
   };
 };
 
-export const loggedUserFixture = baseFixture.extend<
+export const loggedUser = baseFixture.extend<
   DefaultUserOption & { app: Application }
 >({
   defaultUser: [
@@ -30,33 +28,7 @@ export const loggedUserFixture = baseFixture.extend<
     },
   ],
   app: async ({ app, defaultUser }, use) => {
-    await app.login.open();
-    await app.login.login(defaultUser);
-    await app.dashboard.expectLoaded();
+    await app.headlessLogin(defaultUser);
     await use(app);
-    // Cleanup
-    console.log("Post fixture!", defaultUser);
   },
 });
-
-interface UserContext {
-  user: { userModel: UserCreateRequest; createdUser: UserCreatedResponse };
-}
-
-// export const loggedInAsNewUserFixture = baseFixture.extend<UserContext>({
-//   user: async ({ app }, use) => {
-//     const userModel = {
-//       isSubscribed: false,
-//       email: `test+${randomUUID()}@test.com`,
-//       firstName: "test",
-//       lastName: "test",
-//       password: "xotabu4@gmail.com",
-//     };
-
-//     const createdUser = await app.api.auth.createNewUser(userModel);
-//     await app.headlessLogin(userModel);
-//     await app.home.open();
-
-//     await use({ userModel, createdUser });
-//   },
-// });

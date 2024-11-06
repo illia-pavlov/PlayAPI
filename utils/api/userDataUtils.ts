@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { User } from "../../src/types/types";
+import { User } from "./types/types";
 
 export function generateRandomUser(isSubscribed: boolean = false): User {
   return {

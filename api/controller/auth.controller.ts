@@ -25,10 +25,16 @@ export class AuthController extends RequestHolder {
   }
 
   async createNewUser(data: UserCreateRequest): Promise<UserCreatedResponse> {
-    const resp = await this.request.post("/api/auth/register", {
+    const userCreatedResponse = await this.request.post("/api/auth/register", {
       data,
     });
 
-    return resp.json() as Promise<UserCreatedResponse>;
+    await this.expectStatusCode(userCreatedResponse, 200);
+    await this.expectResponseObject(
+      userCreatedResponse,
+      userCreatedResponseTemplate
+    );
+
+    return userCreatedResponse.json() as Promise<UserCreatedResponse>;
   }
 }

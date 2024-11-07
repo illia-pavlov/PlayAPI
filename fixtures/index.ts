@@ -27,7 +27,10 @@ export const loggedUser = baseFixture.extend<
       option: true,
     },
   ],
-  app: async ({ app, defaultUser }, use) => {
+  app: async ({ app, defaultUser, page }, use) => {
+    await page.routeFromHAR("cache/cache.har", {
+      notFound: "fallback",
+    });
     await app.headlessLogin(defaultUser);
     await use(app);
   },

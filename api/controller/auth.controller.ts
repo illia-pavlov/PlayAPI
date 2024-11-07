@@ -1,3 +1,4 @@
+import { step } from "../../misc/reporters/step";
 import {
   loginResponseTemplate,
   userCreatedResponseTemplate,
@@ -10,6 +11,7 @@ import {
 import { RequestHolder } from "../requestHolder";
 
 export class AuthController extends RequestHolder {
+  @step()
   async login(data: {
     email: string;
     password: string;
@@ -24,6 +26,7 @@ export class AuthController extends RequestHolder {
     return loginResponse.json() as Promise<LoginResponse>;
   }
 
+  @step()
   async createNewUser(data: UserCreateRequest): Promise<UserCreatedResponse> {
     const userCreatedResponse = await this.request.post("/api/auth/register", {
       data,

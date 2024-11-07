@@ -15,7 +15,11 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [["html"], ["json", { outputFile: "test-results/results.json" }]],
+  reporter: [
+    ["html"],
+    ["json", { outputFile: "test-results/results.json" }],
+    // ["./misc/reporters/slowStepReporter.ts"],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   timeout: 30000,
   use: {
@@ -25,6 +29,7 @@ export default defineConfig({
     baseURL: process.env.UI_BASE_URL,
     actionTimeout: 15 * 1000,
   },
+  globalSetup: require.resolve("./misc/cacheWarmer.ts"),
   projects: [
     {
       name: "API Tests",

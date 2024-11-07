@@ -4,6 +4,7 @@ import { PageHolder } from "./abstractClasses";
 import { Header } from "./component/header.component";
 import { Home } from "./page/home.page";
 import { Dashboard } from "./page/dashboard.page";
+import { step } from "../misc/reporters/step";
 
 export class Application extends PageHolder {
   public api = new API(this.page.request);
@@ -13,11 +14,13 @@ export class Application extends PageHolder {
   public login = new Login(this.page);
   public dashboard = new Dashboard(this.page);
 
+  @step()
   async headlessLogin(data: { email: string; password: string }) {
     const token = (await this.api.auth.login(data)).token;
     await this.setTokenToLocalStorage(token);
   }
 
+  @step()
   async setTokenToLocalStorage(token: string) {
     await this.page.goto("/", { waitUntil: "commit" });
     await this.page.evaluate(

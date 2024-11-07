@@ -1,8 +1,10 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
+import { step } from "../misc/reporters/step";
 
 export abstract class RequestHolder {
   constructor(protected request: APIRequestContext) {}
 
+  @step()
   protected async expectStatusCode(
     response: APIResponse,
     expectedStatus: number
@@ -16,6 +18,7 @@ export abstract class RequestHolder {
       );
     }
   }
+  @step()
   protected async expectResponseObject<T>(
     response: APIResponse,
     referenceObject: Partial<T>

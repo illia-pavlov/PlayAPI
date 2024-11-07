@@ -1,5 +1,6 @@
 import { expect } from "playwright/test";
 import { AppPage } from "../abstractClasses";
+import { step } from "../../misc/reporters/step";
 
 export class Dashboard extends AppPage {
   public pagePath = "/dashboard";
@@ -17,6 +18,7 @@ export class Dashboard extends AppPage {
   private saveButton = this.page.getByRole("button", { name: "Save Changes" });
   private successMessage = this.page.getByRole("heading", { name: "Your profile is successfully updated!" });
 
+  @step()
   async expectLoaded() {
     await expect(this.title).toBeVisible();
     await expect(this.firstNameInput).toBeVisible();
@@ -24,6 +26,7 @@ export class Dashboard extends AppPage {
     await expect(this.phoneNumberInput).toBeVisible();
   }
 
+  @step()
   async edit(user: { email: string; password: string; phone: string }) {
     await this.firstNameInput.fill(user.email);
     await this.lastNameInput.fill(user.password);

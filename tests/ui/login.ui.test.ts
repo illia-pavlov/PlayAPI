@@ -1,29 +1,30 @@
-import { test } from "playwright/test";
-import { Application } from "../../app";
+import { baseFixture } from "../../fixtures";
 
-test.describe("Login", () => {
-  test("Able to login with valid credentials", async ({ page }) => {
-    const app = new Application(page);
-    await app.login.open();
+baseFixture.describe("Login", () => {
+  baseFixture(
+    "Able to login with valid credentials",
+    async ({ app: { login, dashboard } }) => {
+      await login.open();
 
-    // TODO move test data from test to test data file
-    await app.login.login({
-      email: "test123@test.test",
-      password: "test123@test.test",
-    });
-    await app.dashboard.expectLoaded();
-  });
+      // TODO move test data from test to test data file
+      await login.login({
+        email: "test123@test.test",
+        password: "test123@test.test",
+      });
+      await dashboard.expectLoaded();
+    }
+  );
 
-  test("Should not be able to login with blank email and password", async ({
-    page,
-  }) => {
-    const app = new Application(page);
-    await app.login.open();
-    await app.login.login({
-      email: "",
-      password: "",
-    });
-    await app.login.expectErrors();
-    await app.login.expectLoaded();
-  });
+  baseFixture(
+    "Should not be able to login with blank email and password",
+    async ({ app: { login } }) => {
+      await login.open();
+      await login.login({
+        email: "",
+        password: "",
+      });
+      await login.expectErrors();
+      await login.expectLoaded();
+    }
+  );
 });

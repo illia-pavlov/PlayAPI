@@ -23,6 +23,8 @@ jobs:
       HOME: /root
       API_BASE_URL: ${{ secrets.API_BASE_URL }}
       UI_BASE_URL: ${{ secrets.UI_BASE_URL }}
+      ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:

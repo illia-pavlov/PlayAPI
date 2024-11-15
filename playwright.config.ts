@@ -4,6 +4,9 @@ dotenv.config();
 
 import { defineConfig, devices } from "@playwright/test";
 
+const date = new Date().toISOString().slice(0, 10);
+const outputDir = `./test-results/${date}`;
+
 export default defineConfig({
   testDir: "./src/tests",
   /* Run tests in files in parallel */
@@ -15,9 +18,19 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  outputDir: outputDir,
   reporter: [
     ["html"],
     ["json", { outputFile: "test-results/results.json" }],
+    [
+      "monocart-reporter",
+      {
+        name: "My Test Report",
+        outputFile: "./test-results/report.html",
+        // connect previous report data for trend chart
+        trend: "./test-results/report.json",
+      },
+    ],
     // ["./misc/reporters/slowStepReporter.ts"],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

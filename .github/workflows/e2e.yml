@@ -31,6 +31,12 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.48.0
     steps:
       - uses: actions/checkout@v4
+      - name: Download Previous Trend Data
+        uses: actions/download-artifact@v4
+        with:
+          name: trend-data
+          path: ./test-results/
+        continue-on-error: true
       - name: install deps
         run: npm ci
       - name: running e2e tests
@@ -44,6 +50,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: Monocart Report
+          name: trend-data
           path: test-results/report.html
           retention-days: 7

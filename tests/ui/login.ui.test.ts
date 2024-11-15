@@ -6,10 +6,17 @@ baseFixture.describe("Login", () => {
     async ({ app: { login, dashboard } }) => {
       await login.open();
 
-      // TODO move test data from test to test data file
+      const email = process.env.ADMIN_EMAIL;
+      const password = process.env.ADMIN_PASSWORD;
+
+      if (!email || !password) {
+        throw new Error(
+          "Environment variables ADMIN_EMAIL and ADMIN_PASSWORD must be defined"
+        );
+      }
       await login.login({
-        email: "test123@test.test",
-        password: "test123@test.test",
+        email,
+        password
       });
       await dashboard.expectLoaded();
     }

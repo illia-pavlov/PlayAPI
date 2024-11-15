@@ -1,5 +1,6 @@
 import { test } from "@playwright/test";
 import { Application } from "../app";
+import { EnvConfig } from "../utils/EnvConfig";
 
 export const baseFixture = test.extend<{ app: Application }>({
   app: async ({ page }, use) => {
@@ -20,8 +21,8 @@ export const loggedUser = baseFixture.extend<
 >({
   defaultUser: [
     {
-      email: "test123@test.test",
-      password: "test123@test.test",
+      email: EnvConfig.getVariable("ADMIN_EMAIL"),
+      password: EnvConfig.getVariable("ADMIN_PASSWORD"),
     },
     {
       option: true,

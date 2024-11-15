@@ -1,6 +1,6 @@
 import { expect } from "playwright/test";
-import { AppPage } from "../abstractClasses";
-import { step } from "../../misc/reporters/step";
+import { AppPage } from "../../abstractClasses";
+import { step } from "../../../misc/reporters/step";
 
 export class Dashboard extends AppPage {
   public pagePath = "/dashboard";
@@ -16,7 +16,13 @@ export class Dashboard extends AppPage {
     name: "Please Enter Your Phone Number",
   });
   private saveButton = this.page.getByRole("button", { name: "Save Changes" });
-  private successMessage = this.page.getByRole("heading", { name: "Your profile is successfully updated!" });
+  private successMessage = this.page.getByRole("heading", {
+    name: "Your profile is successfully updated!",
+  });
+
+  private resetPasswordButton = this.page.getByRole("button", {
+    name: "Reset Password",
+  });
 
   @step()
   async expectLoaded() {
@@ -33,5 +39,13 @@ export class Dashboard extends AppPage {
     await this.phoneNumberInput.fill(user.phone);
     await this.saveButton.click();
     await expect(this.successMessage).toBeVisible();
+  }
+
+  @step()
+  async openSecuritySection() {
+    await this.page.goto(`${this.pagePath}/security`, {
+      waitUntil: "domcontentloaded",
+    });
+    await expect(this.resetPasswordButton).toBeVisible();
   }
 }

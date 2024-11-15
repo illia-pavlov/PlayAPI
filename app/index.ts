@@ -3,8 +3,10 @@ import { Login } from "./page/login.page";
 import { PageHolder } from "./abstractClasses";
 import { Header } from "./component/header.component";
 import { Home } from "./page/home.page";
-import { Dashboard } from "./page/dashboard.page";
+import { Dashboard } from "./page/dashboard/dashboard.page";
 import { step } from "../misc/reporters/step";
+import { DashboardMenu } from "./page/dashboard/components/menu.component";
+import { SecurityPanel } from "./page/dashboard/components/security.component";
 
 export class Application extends PageHolder {
   public api = new API(this.page.request);
@@ -13,6 +15,8 @@ export class Application extends PageHolder {
   public header = new Header(this.page);
   public login = new Login(this.page);
   public dashboard = new Dashboard(this.page);
+  public dashboardMenu = new DashboardMenu(this.page);
+  public securityPanel = new SecurityPanel(this.page);
 
   @step()
   async headlessLogin(data: { email: string; password: string }) {

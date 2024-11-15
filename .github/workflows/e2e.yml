@@ -33,11 +33,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Step to ensure test-results directory exists
-      - name: Create Test Results Directory
-        run: mkdir -p ./test-results
-
-      # Optional: Download previous trend data if available
       - name: Download Previous Trend Data
         uses: actions/download-artifact@v4
         with:
@@ -45,34 +40,18 @@ jobs:
           path: ./test-results/
         continue-on-error: true
 
-      # Install dependencies
       - name: Install Dependencies
         run: npm ci
 
-      # Debug step: Check if trend file exists before running tests
-      - name: Debug Trend File Before Test
-        run: if [ -f "./test-results/report.json" ]; then echo "Trend file exists before run."; else echo "Trend file does NOT exist before run."; fi
-
-      # Run E2E Tests
       - name: Run E2E Tests
         run: npx playwright test
-
-      # Debug step: Check if trend file exists after running tests
-      - name: Debug Trend File After Test
-        run: if [ -f "./test-results/report.json" ]; then echo "Trend file exists after run."; else echo "Trend file does NOT exist after run."; fi
-
-      # Debug step: List contents of the test-results directory
-      - name: List Test Results Directory
-        run: ls -al ./test-results
-
-      # Upload Monocart Report
+        
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: Monocart Report
           path: test-results/report.html
 
-      # Upload Updated Trend Data
       - uses: actions/upload-artifact@v4
         if: always()
         with:

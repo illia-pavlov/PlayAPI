@@ -20,14 +20,13 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   outputDir: outputDir,
   reporter: [
-    ["html"],
-    ["json", { outputFile: "test-results/results.json" }],
+    // ["html"],
+    // ["json", { outputFile: "test-results/results.json" }],
     [
       "monocart-reporter",
       {
         name: "My Test Report",
         outputFile: "./test-results/report.html",
-        // connect previous report data for trend chart
         trend: "./test-results/report.json",
       },
     ],

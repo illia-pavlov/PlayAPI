@@ -14,6 +14,7 @@ name: e2e tests
 #   workflow_dispatch:
 
 # manual run
+
 on:
   workflow_dispatch:
 
@@ -31,26 +32,37 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.48.0
     steps:
       - uses: actions/checkout@v4
-      - name: Download Previous Trend Data
-        uses: actions/download-artifact@v4
-        with:
-          name: trend-data
-          path: ./test-results/
-        continue-on-error: true
-      - name: install deps
+
+      # Install dependencies
+      - name: Install Dependencies
         run: npm ci
-      - name: running e2e tests
+
+      # Debug step: Check if trend file exists before running tests
+      - name: Debug Trend File Before Test
+        run: if [ -f "./test-results/report.json" ]; then echo "Trend file exists before run."; else echo "Trend file does NOT exist before run."; fi
+
+      # Run E2E Tests
+      - name: Run E2E Tests
         run: npx playwright test
+
+      # Debug step: Check if trend file exists after running tests
+      - name: Debug Trend File After Test
+        run: if [ -f "./test-results/report.json" ]; then echo "Trend file exists after run."; else echo "Trend file does NOT exist after run."; fi
+
+      # Debug step: List contents of the test-results directory
+      - name: List Test Results Directory
+        run: ls -al ./test-results
+
+      # Upload Monocart Report
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: Monocart Report
           path: test-results/report.html
-          retention-days: 7
-      - name: Upload Trend Data
-        uses: actions/upload-artifact@v4
+
+      # Upload Updated Trend Data
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: trend-data
-          path: test-results/report.json
-          retention-days: 7
+          path: ./test-results/report.json

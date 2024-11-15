@@ -44,12 +44,13 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: e2e-report
-          path: playwright-report/
+          name: Monocart Report
+          path: test-results/report.html
           retention-days: 7
-      - uses: actions/upload-artifact@v4
+      - name: Upload Trend Data
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: trend-data
-          path: test-results/report.html
+          path: test-results/report.json
           retention-days: 7

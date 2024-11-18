@@ -1,15 +1,18 @@
+import { Page } from "playwright/test";
 import { API } from "../api/api";
+import { Database } from "../database/Database";
 import { Login } from "./page/login.page";
 import { PageHolder } from "./abstractClasses";
 import { Header } from "./component/header.component";
 import { Home } from "./page/home.page";
 import { Dashboard } from "./page/dashboard/dashboard.page";
-import { step } from "../misc/reporters/step";
 import { DashboardMenu } from "./page/dashboard/components/menu.component";
 import { SecurityPanel } from "./page/dashboard/components/security.component";
+import { step } from "../misc/reporters/step";
 
 export class Application extends PageHolder {
   public api = new API(this.page.request);
+  public db!: Database;
 
   public home = new Home(this.page);
   public header = new Header(this.page);
@@ -17,6 +20,20 @@ export class Application extends PageHolder {
   public dashboard = new Dashboard(this.page);
   public dashboardMenu = new DashboardMenu(this.page);
   public securityPanel = new SecurityPanel(this.page);
+
+  constructor(protected page: Page) {
+    super(page);
+  }
+
+  async initialize(): Promise<void> {
+    this.db = await Database.initializeDatabase();
+  }
+
+  async close(): Promise<void> {
+    if (this.db) {
+      await this.db.close();
+    }
+  }
 
   @step()
   async headlessLogin(data: { email: string; password: string }) {

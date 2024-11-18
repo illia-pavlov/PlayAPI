@@ -1,4 +1,6 @@
 import { baseFixture } from "../../fixtures";
+import dotenv from "dotenv";
+dotenv.config();
 
 baseFixture.describe("Login", () => {
   baseFixture(
@@ -16,7 +18,7 @@ baseFixture.describe("Login", () => {
       }
       await login.login({
         email,
-        password
+        password,
       });
       await dashboard.expectLoaded();
     }

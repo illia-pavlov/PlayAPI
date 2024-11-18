@@ -41,7 +41,7 @@ export default defineConfig({
     baseURL: process.env.UI_BASE_URL,
     actionTimeout: 15 * 1000,
   },
-  globalSetup: require.resolve("./misc/cacheWarmer.ts"),
+  // globalSetup: require.resolve("./misc/cacheWarmer.ts"),
   projects: [
     {
       name: "API Tests",

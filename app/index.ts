@@ -8,6 +8,9 @@ import { Home } from "./page/home.page";
 import { Dashboard } from "./page/dashboard/dashboard.page";
 import { DashboardMenu } from "./page/dashboard/components/menu.component";
 import { SecurityPanel } from "./page/dashboard/components/security.component";
+import { BrandPanel } from "./page/dashboard/components/brand.component";
+import { AddBrandPage } from "./page/dashboard/components/addBrand.component";
+
 import { step } from "../misc/reporters/step";
 
 export class Application extends PageHolder {
@@ -20,16 +23,18 @@ export class Application extends PageHolder {
   public dashboard = new Dashboard(this.page);
   public dashboardMenu = new DashboardMenu(this.page);
   public securityPanel = new SecurityPanel(this.page);
+  public brandPanel = new BrandPanel(this.page);
+  public addBrandPage = new AddBrandPage(this.page);
 
   constructor(protected page: Page) {
     super(page);
   }
 
-  async initialize(): Promise<void> {
+  async dbInitialize(): Promise<void> {
     this.db = await Database.initializeDatabase();
   }
 
-  async close(): Promise<void> {
+  async dbClose(): Promise<void> {
     if (this.db) {
       await this.db.close();
     }

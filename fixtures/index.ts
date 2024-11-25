@@ -33,6 +33,8 @@ export const loggedUser = baseFixture.extend<
       notFound: "fallback",
     });
     await app.headlessLogin(defaultUser);
+    await app.dbInitialize();
     await use(app);
+    await app.dbClose();
   },
 });

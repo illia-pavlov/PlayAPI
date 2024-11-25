@@ -11,8 +11,6 @@ loggedUser.describe("Brands", () => {
       description: "Brand 1 description",
     });
     await app.brandPanel.expectBrandAddedToaster();
-    await app.dbInitialize();
     await app.db.brandService.getDocumentByBrandName("Brand 1");
-    await app.dbClose();
   });
 });
